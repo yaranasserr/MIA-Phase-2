@@ -7,7 +7,7 @@
 int speed_value =0;
 int current_value= 0;
 float smoothed_value=0;
-float alpha =0.2;
+float smoothing_factor =0.2;
 Encoder myEncoder(EncoderA,EncoderB);
 volatile long encoder_position =0;
 
@@ -26,7 +26,7 @@ pinMode(motor_speed,OUTPUT);
 void loop() {
     int motor_speed_reading =encoder_position;
   current_value = motor_speed_reading;
-  smoothed_value = (alpha*current_value)+((1 - alpha)* smoothed_value);
+  smoothed_value = (smoothing_factor*current_value)+((1 - smoothing_factor)* smoothed_value);
   
   digitalWrite(motor_direction,HIGH);//if it is high its froward if its low it goes backwards
   speed_value=int(smoothed_value);
