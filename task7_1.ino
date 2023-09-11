@@ -7,7 +7,7 @@
 int speed_value =0;
 int current_value= 0;
 float smoothed_value=0;
-float smoothing_factor =0.2;
+float smoothing_factor =0.9;
 Encoder myEncoder(EncoderA,EncoderB);
 volatile long encoder_position =0;
 
