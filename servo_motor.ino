@@ -15,7 +15,7 @@ void servo_motor_control()//function to cotrol servo motor
   }
   for(i=90;i>0;i--) //loop for controlling time of motion in opposite direction
   {
-    servo.write(i);
+    servo_motor.write(i);
   	delay(100);
   }
   	
