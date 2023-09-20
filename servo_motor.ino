@@ -2,7 +2,7 @@
 Servo servo_motor;//defining the name usage as servo itself
 void setup() {
   Serial.begin(9600);
-  servo_motor.attach(2);//setup
+  servo_motor.attach(2);//setup pin pwm pin
 
 }
 void servo_motor_control()//function to cotrol servo motor
