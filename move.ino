@@ -1,12 +1,13 @@
 // Pin definitions
 #define speed_motor1 3
 #define speed_motor2 5
-#define forward_motor1 2
-#define backward_motor1 4
+#define forward_motor1 4
+#define backward_motor1 2
 #define forward_motor2 6
 #define backward_motor2 7
 
-
+int speed_one=140;
+int speed_two=200;
 
 void setup(){
   pinMode(speed_motor1, OUTPUT);
@@ -25,13 +26,14 @@ void Stop()
   digitalWrite(backward_motor2, LOW);
   Serial.println("stop");
 }
-void forward(int distance) {
+
+void forward(int distance ,int speed_one , int speed_two) {
   unsigned long startTime = millis();
   while (millis() - startTime < distance) {
-    analogWrite(speed_motor1, Speed);
+    analogWrite(speed_motor1, speed_one);
     digitalWrite(forward_motor1, HIGH);
     digitalWrite(backward_motor1, LOW);
-    analogWrite(speed_motor2, Speed);
+    analogWrite(speed_motor2,speed_two);
     digitalWrite(forward_motor2, HIGH);
     digitalWrite(backward_motor2, LOW);
     Serial.println("forward");
@@ -39,13 +41,13 @@ void forward(int distance) {
   Stop();
 }
 
-void backward(int distance) {
+void backward(int distance ,int speed_one , int speed_two) {
   unsigned long startTime = millis();
   while (millis() - startTime < distance) {
-    analogWrite(speed_motor1, Speed);
+    analogWrite(speed_motor1, speed_one);
     digitalWrite(forward_motor1, LOW);
     digitalWrite(backward_motor1, HIGH);
-    analogWrite(speed_motor2, Speed);
+    analogWrite(speed_motor2, speed_two);
     digitalWrite(forward_motor2, LOW);
     digitalWrite(backward_motor2, HIGH);
     Serial.println("backward");
@@ -53,13 +55,13 @@ void backward(int distance) {
   Stop();
 }
 
-void left(int distance) {
+void left(int distance ,int speed_one , int speed_two) {
   unsigned long startTime = millis();
   while (millis() - startTime < distance) {
-    analogWrite(speed_motor1, Speed);
+    analogWrite(speed_motor1, speed_one);
     digitalWrite(forward_motor1, HIGH);
     digitalWrite(backward_motor1, LOW);
-    analogWrite(speed_motor2, Speed);
+    analogWrite(speed_motor2, speed_two);
     digitalWrite(forward_motor2, LOW);
     digitalWrite(backward_motor2, HIGH);
     Serial.println("left");
@@ -67,13 +69,13 @@ void left(int distance) {
   Stop();
 }
 
-void right(int distance) {
+void right(int distance ,int speed_one , int speed_two) {
   unsigned long startTime = millis();
   while (millis() - startTime < distance) {
-    analogWrite(speed_motor1, Speed);
+    analogWrite(speed_motor1,speed_one);
     digitalWrite(forward_motor1, LOW);
     digitalWrite(backward_motor1, HIGH);
-    analogWrite(speed_motor2, Speed);
+    analogWrite(speed_motor2, speed_two);
     digitalWrite(forward_motor2, HIGH);
     digitalWrite(backward_motor2, LOW);
     Serial.println("right");
@@ -82,11 +84,6 @@ void right(int distance) {
 }
 
 void loop(){
-  forward(30)
-
-}
-void loop() {
-  forward();
-  // put your main code here, to run repeatedly:
+  forward(30,100,100)
 
 }
