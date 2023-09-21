@@ -139,6 +139,14 @@ float return_angle():
    return gyroDegree;
 }
 //Motor Movement//
+void Stop()
+{
+  digitalWrite(forward_motor1, LOW);
+  digitalWrite(backward_motor1, LOW);
+  digitalWrite(forward_motor2, LOW);
+  digitalWrite(backward_motor2, LOW);
+  Serial.println("stop");
+}
 void forward(int distance) {
   unsigned long startTime = millis();
   while (millis() - startTime < distance) {
@@ -195,54 +203,8 @@ void right(int distance) {
   Stop();
 }
 
-// void forward()
-// {
-//   analogWrite(speed_motor1, Speed);
-//   digitalWrite(forward_motor1, HIGH);
-//   digitalWrite(backward_motor1, LOW);
-//   analogWrite(speed_motor2, Speed);
-//   digitalWrite(forward_motor2, HIGH);
-//   digitalWrite(backward_motor2, LOW);
-//   Serial.println("forward");
-// }
-// void backward()
-// {
-//   analogWrite(speed_motor1, Speed);
-//   digitalWrite(forward_motor1, LOW);
-//   digitalWrite(backward_motor1, HIGH);
-//   analogWrite(speed_motor2, Speed);
-//   digitalWrite(forward_motor2, LOW);
-//   digitalWrite(backward_motor2, HIGH);
-//   Serial.println("backward");
-// }
-// void left()
-// {
-//   analogWrite(speed_motor1, Speed);
-//   digitalWrite(forward_motor1, HIGH);
-//   digitalWrite(backward_motor1, LOW);
-//   analogWrite(speed_motor2, Speed);
-//   digitalWrite(forward_motor2, LOW);
-//   digitalWrite(backward_motor2, HIGH);
-//   Serial.println("left");
-// }
-// void right()
-// {
-//   analogWrite(speed_motor1, Speed);
-//   digitalWrite(forward_motor1, LOW);
-//   digitalWrite(backward_motor1, HIGH);
-//   analogWrite(speed_motor2, Speed);
-//   digitalWrite(forward_motor2, HIGH);
-//   digitalWrite(backward_motor2, LOW);
-//   Serial.println("right");
-// }
-void Stop()
-{
-  digitalWrite(forward_motor1, LOW);
-  digitalWrite(backward_motor1, LOW);
-  digitalWrite(forward_motor2, LOW);
-  digitalWrite(backward_motor2, LOW);
-  Serial.println("stop");
-}
+
+
 
 long get_distance() {
   // Trigger ultrasonic sensor
@@ -265,10 +227,10 @@ long get_distance() {
 
 void avoidCollision(int desiredDistance) {
   long distance = get_distance();
-
   // Check if the measured distance is less than desired distance
   if (distance < desiredDistance) {
-    // Take action to avoid collision, change the direction of motion
+    // Take action to avoid collision, stop or reverse the direction of motion
+    Stop();
   }
 }
 
@@ -301,17 +263,19 @@ void avoidCollision(int desiredDistance) {
 
 void loop() {
   if (count == 0) {
-    // Step 1: Move forward downward 0.7 meter
-    forward(70); 
+    //step 0 : rotate left till 90 degree to move downward the map 
+    left(10);
+    // Step 1: Move forward downward from mid of blue to green 66 cm 
+    forward(64); 
 
     // Step 2: Use ultrasonic sensor to prevent hitting the fence (margin 5 cm)
-    avoidCollision(5); 
+    avoidCollision(4.5); 
     // Step 3: Move backward upward to reach the upper right using ultrasonic sensor to detect 1.4m
-    int distance_to_upper_right = 140;
+    int distance_to_upper_right = 150;
     while (get_distance() > distance_to_upper_right) {
       backward(10); // 
     }
-    Stop();
+  
 
     // Step 4: IR sensor at the back to detect the green label
     read_color(); 
@@ -324,7 +288,7 @@ void loop() {
 
     // Step 5: Move downward 0.3 and rotate left
     forward(30); // Assuming 30 is the distance in units compatible with your sensor
-    left(300);
+    left(30);
     Stop();
   }
 }
